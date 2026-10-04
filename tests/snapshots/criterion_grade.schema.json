@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "description": "Structured output produced by the judge for a single criterion.\n\nThis is the schema sent to the LLM via `output_format`; keep it small and stable.",
+  "properties": {
+    "score": {
+      "description": "Score on the 0-5 scale defined by the rubric",
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Score",
+      "type": "integer"
+    },
+    "rationale": {
+      "description": "Short justification grounded on the conversation",
+      "minLength": 1,
+      "title": "Rationale",
+      "type": "string"
+    },
+    "evidence": {
+      "description": "Literal excerpts copied verbatim from the conversation",
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    }
+  },
+  "required": [
+    "score",
+    "rationale"
+  ],
+  "title": "CriterionGrade",
+  "type": "object"
+}
