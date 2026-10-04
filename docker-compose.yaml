@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    image: conversation-grader:local
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.example
+    environment:
+      # Demo mode by default: no external credentials required.
+      USE_FAKE_LLM: "true"
+      LOG_LEVEL: "INFO"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
