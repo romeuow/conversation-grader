@@ -1,0 +1,68 @@
+# Prompt regression suite for rubric sales_v1.
+# Each case pins the expected score per criterion; a run fails when |actual - expected| > tolerance.
+rubric_id: sales_v1
+default_tolerance: 1
+cases:
+  - id: good_full_cycle
+    description: Abertura completa, descoberta, objecao acolhida e proximo passo com data.
+    expected: { opening: 5, discovery: 5, objection_handling: 5, next_steps: 5, compliance: 5 }
+    conversation:
+      id: eval-001
+      agent_id: eval-agent
+      channel: whatsapp
+      messages:
+        - { role: agent, text: "Olá, bom dia! Meu nome é Ana Exemplo, sou da equipe comercial. Tudo bem com você?" }
+        - { role: customer, text: "Bom dia. Vi o anúncio sobre economia na conta de luz." }
+        - { role: agent, text: "Como é o perfil de consumo da sua empresa hoje? Qual o valor médio mensal?" }
+        - { role: customer, text: "Uns doze mil por mês. Mas acho caro mudar de fornecedor." }
+        - { role: agent, text: "Compreendo, é natural. Posso compartilhar os dados de uma simulação sem compromisso." }
+        - { role: customer, text: "Pode ser." }
+        - { role: agent, text: "Vou enviar a proposta hoje e agendar uma conversa na quarta às 10h. Combinado?" }
+        - { role: customer, text: "Combinado." }
+  - id: no_opening_no_discovery
+    description: Sem apresentacao, sem perguntas, encaminhamento vago.
+    expected: { opening: 0, discovery: 0, next_steps: 1, compliance: 5 }
+    conversation:
+      id: eval-002
+      agent_id: eval-agent
+      channel: chat
+      messages:
+        - { role: agent, text: "Temos um plano com desconto. Quer contratar." }
+        - { role: customer, text: "Não sei. Vou pensar." }
+        - { role: agent, text: "Ok, qualquer coisa me chama." }
+  - id: undue_promise_and_pressure
+    description: Garantia de economia, isencao e urgencia artificial.
+    tolerance: 0
+    expected: { compliance: 0 }
+    conversation:
+      id: eval-003
+      agent_id: eval-agent
+      channel: phone
+      messages:
+        - { role: agent, text: "Boa tarde, aqui é o Bruno Exemplo, falo da área comercial." }
+        - { role: customer, text: "Pode falar." }
+        - { role: agent, text: "Eu garanto 30% de economia todo mês, sem risco nenhum, e a oferta é só hoje." }
+        - { role: customer, text: "Vou pensar." }
+  - id: sensitive_request
+    description: Vendedor pede senha do portal.
+    tolerance: 0
+    expected: { compliance: 0, opening: 0 }
+    conversation:
+      id: eval-004
+      agent_id: eval-agent
+      channel: chat
+      messages:
+        - { role: agent, text: "Fala! Me passa sua senha do portal que eu simulo pra você." }
+        - { role: customer, text: "Não vou passar senha." }
+  - id: objection_without_alternative
+    description: Objecao reconhecida mas sem alternativa concreta.
+    expected: { objection_handling: 3 }
+    conversation:
+      id: eval-005
+      agent_id: eval-agent
+      channel: chat
+      messages:
+        - { role: agent, text: "Olá, me chamo Carla Exemplo, sou da equipe comercial." }
+        - { role: customer, text: "Acho caro." }
+        - { role: agent, text: "Entendo a sua preocupação." }
+        - { role: customer, text: "Ok." }
