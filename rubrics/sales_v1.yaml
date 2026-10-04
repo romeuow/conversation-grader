@@ -1,0 +1,65 @@
+# Rubric: sales conversations (v1)
+# Each criterion is scored 0-5. Anchors describe what each level looks like.
+id: sales_v1
+version: "1.0.0"
+name: "Qualidade de conversas de vendas"
+description: >
+  Avalia conversas entre vendedor (humano ou agente automatizado) e lead, do primeiro contato
+  ao encaminhamento de proximos passos, incluindo conformidade.
+criteria:
+  - id: opening
+    name: "Abertura"
+    description: >
+      O vendedor se apresenta, identifica a empresa/contexto e estabelece rapport de forma
+      cordial e objetiva nas primeiras mensagens.
+    weight: 1.0
+    anchors:
+      0: "Nao ha abertura: o vendedor comeca direto com oferta ou ignora o lead."
+      1: "Saudacao minima, sem apresentacao nem contexto."
+      3: "Saudacao e apresentacao presentes, mas sem personalizacao."
+      5: "Saudacao, apresentacao, contexto do contato e tom cordial e personalizado."
+  - id: discovery
+    name: "Descoberta de necessidade"
+    description: >
+      O vendedor faz perguntas abertas para entender a situacao, a dor e os objetivos do lead
+      antes de propor uma solucao.
+    weight: 1.5
+    anchors:
+      0: "Nenhuma pergunta de descoberta."
+      1: "Uma pergunta generica, sem aprofundamento."
+      3: "Algumas perguntas relevantes, mas a proposta vem antes de entender o cenario."
+      5: "Perguntas abertas encadeadas que mapeiam dor, contexto e criterio de decisao."
+  - id: objection_handling
+    name: "Tratamento de objecoes"
+    description: >
+      Quando o lead levanta duvidas ou resistencias (preco, prazo, confianca), o vendedor
+      reconhece a objecao, esclarece e oferece alternativas sem pressionar.
+    weight: 1.5
+    anchors:
+      0: "Ignora ou rebate a objecao de forma agressiva."
+      1: "Responde superficialmente, sem acolher a objecao."
+      3: "Reconhece a objecao e responde, mas sem alternativas concretas."
+      5: "Acolhe, esclarece com dados e oferece alternativas; o lead se sente ouvido."
+  - id: next_steps
+    name: "Proximos passos"
+    description: >
+      A conversa termina com um encaminhamento claro: proposta, agendamento, retorno em data
+      definida ou fechamento.
+    weight: 1.0
+    anchors:
+      0: "Conversa termina sem encaminhamento."
+      1: "Encaminhamento vago ('qualquer coisa me chama')."
+      3: "Encaminhamento definido, mas sem data ou responsavel."
+      5: "Encaminhamento claro, com data, responsavel e confirmacao do lead."
+  - id: compliance
+    name: "Conformidade e promessas"
+    description: >
+      O vendedor nao faz promessas indevidas (garantias de resultado, isencoes, retornos
+      garantidos), nao pressiona com urgencia artificial e nao solicita dados sensiveis
+      desnecessarios.
+    weight: 2.0
+    anchors:
+      0: "Promessa indevida explicita ou solicitacao indevida de dado sensivel."
+      1: "Afirmacoes exageradas ou urgencia artificial recorrente."
+      3: "Linguagem majoritariamente adequada com um deslize leve."
+      5: "Linguagem precisa, sem promessas indevidas nem pressao."
